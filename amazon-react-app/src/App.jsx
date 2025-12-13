@@ -1,10 +1,12 @@
 import "./App.css";
-import Header from "./Components/Header";
+import CarouselEffect from "./Components/CarouselEffect/CarouselEffect";
+import Header from "./Components/Header/Header";
 
 function App() {
   return (
     <>
       <Header />
+      <CarouselEffect />
     </>
   );
 }

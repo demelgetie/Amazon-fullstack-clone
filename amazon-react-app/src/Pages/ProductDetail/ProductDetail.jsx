@@ -1,12 +1,40 @@
-import React from 'react'
-import Layout from '../../Components/Layout/Layout'
+import React, { use, useEffect, useState } from "react";
+import Layout from "../../Components/Layout/Layout";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import ProductCard from "../../Components/Product/ProductCard";
+import { productUrl } from "../../Api/endpoint";
+// import Loader from '../../Components/Loader/Loader';
 
-const ProductDetail = () => {
+function ProductDetail() {
+  const [singleProduct, setSingleProduct] = useState({});
+  // const [isLoading, setIsLoading] = useState(false);
+  const { productId } = useParams();
+
+  useEffect(() => {
+    // setIsLoading(true);
+    axios
+      .get(`${productUrl}/products/${productId}`)
+      .then((res) => {
+        setSingleProduct(res.data);
+        // setIsLoading(false)
+      })
+      .catch((err) => {
+        console.log(err);
+        // setIsLoading(false)
+      });
+  }, []);
+
   return (
     <Layout>
-      <h1>product details</h1>
+      {/* {isLoading? (<Loader />):  (<ProductCard product ={singleProduct}
+      flex ={true}
+      renderDesc={true}
+      renderAdd={true}
+      />)} */}
+      <ProductCard product={singleProduct} />
     </Layout>
-  )
+  );
 }
 
-export default ProductDetail
+export default ProductDetail;

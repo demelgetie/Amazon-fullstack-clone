@@ -1,8 +1,8 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
-import CurrencyFormat from '../CurrencyFormat/CurrencyFormat'
+import CurrencyFormat from "../CurrencyFormat/CurrencyFormat";
 import styles from "./product.module.css";
-// import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 // import { useContext } from 'react'
 // import { Type } from '../../Utility/action.type'
 // import { DataContext } from '../DataProvider/DataProvider'
@@ -33,11 +33,11 @@ function ProductCard({ product }) {
     //   }`}
     // >
     <div className={styles.card_container}>
-      {/* <Link to={`/products/${id}`}> */}
-      <a href="">
+      <Link to={`/products/${id}`}>
+        {/* <a href=""> */}
         <img src={image} alt="" />
-      </a>
-      {/* </Link> */}
+        {/* </a> */}
+      </Link>
 
       <div>
         <h3>{title}</h3>

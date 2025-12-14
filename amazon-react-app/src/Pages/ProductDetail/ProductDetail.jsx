@@ -32,7 +32,7 @@ function ProductDetail() {
       ) : (
         <ProductCard
           product={singleProduct}
-          flex ={true}
+          flex={true}
           renderDesc={true}
           renderAdd={true}
         />

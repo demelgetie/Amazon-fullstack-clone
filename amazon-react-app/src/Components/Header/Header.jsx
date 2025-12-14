@@ -6,7 +6,6 @@ import LowerHeader from "./LowerHeader";
 import { BiCart } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
-// import { auth } from "../../Utility/firebase";
 
 function Header() {
   const [{ basket }, dispatch] = useContext(DataContext);
@@ -17,7 +16,7 @@ function Header() {
     <section className={styles.fixed}>
       <section>
         <div className={styles.header_container}>
-          {/* ==== LOGO + DELIVERY SECTION ==== */}
+          {/*  LOGO + DELIVERY SECTION */}
           <div className={styles.logo_container}>
             <Link to="/">
               {/* <a href="/"> */}
@@ -41,7 +40,7 @@ function Header() {
             </div>
           </div>
 
-          {/* ==== SEARCH BAR ==== */}
+          {/*  SEARCH BAR  */}
           <div className={styles.search}>
             {/* Category dropdown */}
             <select name="" id="">
@@ -55,7 +54,7 @@ function Header() {
             <BsSearch size={38} />
           </div>
 
-          {/* ==== RIGHT SIDE LINKS (Language, Account, Orders, Cart) ==== */}
+          {/* RIGHT SIDE LINKS (Language, Account, Orders, Cart) */}
           <div className={styles.order_container}>
             {/* Language selector */}
             <Link to="" className={styles.language}>
@@ -74,17 +73,8 @@ function Header() {
             {/* <a href=""> */}
             <Link to={"/auth"}>
               <div>
-                {/* {user ? (
-                  <>
-                    <p>Hello {user?.email?.split("@")[0]}</p>
-                    <span onClick={() => auth.signOut()}>Sign Out</span>
-                  </>
-                ) : ( */}
-                <>
-                  <p>Hello, Sign In</p>
-                  <span>Account & Lists</span>
-                </>
-                {/* )} */}
+                <p>Hello, Sign In</p>
+                <span>Account & Lists</span>
               </div>
             </Link>
             {/* </a> */}
@@ -108,7 +98,7 @@ function Header() {
         </div>
       </section>
 
-      {/* ==== LOWER NAVIGATION HEADER ==== */}
+      {/*  LOWER NAVIGATION HEADER  */}
       <LowerHeader />
     </section>
   );

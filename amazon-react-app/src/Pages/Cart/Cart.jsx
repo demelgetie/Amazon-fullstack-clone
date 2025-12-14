@@ -1,12 +1,101 @@
-import React from 'react'
-import Layout from '../../Components/Layout/Layout'
+import React, { useContext } from "react";
+import styles from "./cart.module.css";
+import Layout from "../../Components/Layout/Layout";
+import { DataContext } from "../../Components/DataProvider/DataProvider";
+import ProductCard from "../../Components/Product/ProductCard";
+import CurrencyFormat from "../../Components/CurrencyFormat/CurrencyFormat";
+import { Link } from "react-router-dom";
+import { Type } from "../../Utility/action.type";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 
-function Cart() {
+const Cart = () => {
+  const [{ basket }, dispatch] = useContext(DataContext);
+  const total = basket.reduce((amount, item) => {
+    // return item.price + amount;
+    return item.price * item.amount + amount;
+  }, 0);
+
+  // let a=[4,5,6]
+  // let result = a.reduce((pre,cur)=>{
+  //   return pre+cur
+  // },3)
+  // reduce takes an array and reduces it to ONE value
+  // 3 --initial value
+
+  const increment = (item) => {
+    dispatch({
+      type: Type.ADD_TO_BASKET,
+      item,
+    });
+  };
+
+  const decrement = (id) => {
+    dispatch({
+      type: Type.REMOVE_FROM_BASKET,
+      id,
+    });
+  };
+
   return (
     <Layout>
-      <h1>Cart</h1>
-    </Layout>
-  )
-}
+      <section className={styles.container}>
+        <div className={styles.cart_container}>
+          <h2>Hello</h2>
+          <h3>Your Shopping basket</h3>
+          <hr />
+          {basket?.length == 0 ? (
+            <p>Opps ! No item in your cart </p>
+          ) : (
+            basket?.map((item, i) => (
+              <section key={i} className={styles.cart_product}>
+                <ProductCard
+                  key={i}
+                  product={item}
+                  renderDesc={true}
+                  renderAdd={false}
+                  flex={true}
+                />
 
-export default Cart
+                <div className={styles.btn_container}>
+                  <button
+                    className={styles.btn}
+                    onClick={() => increment(item)}
+                  >
+                    <IoIosArrowUp size={20} />
+                  </button>
+                  <span>{item.amount}</span>
+                  <button
+                    className={styles.btn}
+                    onClick={() => decrement(item.id)}
+                  >
+                    <IoIosArrowDown size={20} />
+                  </button>
+                </div>
+              </section>
+            ))
+          )}
+        </div>
+
+        {basket?.length !== 0 && (
+          <div className={styles.subtotal}>
+            <div>
+              <p>Subtotal ({basket?.length} items)</p>
+
+              <CurrencyFormat amount={total} />
+            </div>
+
+            <span>
+              <input type="checkbox" />
+              <small>This Order contains a gift</small>
+            </span>
+
+            <Link to="/payments"> Continue to checkout</Link>
+          </div>
+        )}
+      </section>
+    </Layout>
+  );
+};
+
+export default Cart;

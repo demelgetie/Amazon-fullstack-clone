@@ -5,14 +5,14 @@ import { BsSearch } from "react-icons/bs";
 import LowerHeader from "./LowerHeader";
 import { BiCart } from "react-icons/bi";
 import { Link } from "react-router-dom";
-// import { DataContext } from "../DataProvider/DataProvider";
+import { DataContext } from "../DataProvider/DataProvider";
 // import { auth } from "../../Utility/firebase";
 
 function Header() {
-  //   const [{ user, basket }, dispatch] = useContext(DataContext);
-  //   const totalItem = basket?.reduce((amount, item) => {
-  //     return item.amount + amount;
-  //   }, 0);
+  const [{ basket }, dispatch] = useContext(DataContext);
+  const totalItem = basket?.reduce((amount, item) => {
+    return item.amount + amount;
+  }, 0);
   return (
     <section className={styles.fixed}>
       <section>
@@ -101,7 +101,7 @@ function Header() {
             <Link to="/cart" className={styles.cart}>
               {/* <a href="" className={styles.cart}> */}
               <BiCart size={35} /> {/* Cart icon */}
-              <span>0</span> {/* Item count */}
+              <span>{totalItem}</span> {/* Item count */}
               {/* </a> */}
             </Link>
           </div>

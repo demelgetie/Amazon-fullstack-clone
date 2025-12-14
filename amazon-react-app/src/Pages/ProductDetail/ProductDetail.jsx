@@ -32,9 +32,9 @@ function ProductDetail() {
       ) : (
         <ProductCard
           product={singleProduct}
-          // flex ={true}
-          // renderDesc={true}
-          // renderAdd={true}
+          flex ={true}
+          renderDesc={true}
+          renderAdd={true}
         />
       )}
     </Layout>

@@ -16,13 +16,7 @@ const Cart = () => {
     return item.price * item.amount + amount;
   }, 0);
 
-  // let a=[4,5,6]
-  // let result = a.reduce((pre,cur)=>{
-  //   return pre+cur
-  // },3)
-  // reduce takes an array and reduces it to ONE value
-  // 3 --initial value
-
+  
   const increment = (item) => {
     dispatch({
       type: Type.ADD_TO_BASKET,

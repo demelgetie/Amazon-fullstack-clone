@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
-import styles from "./Header.module.css";
+import { useContext } from "react";
+import styles from "./header.module.css";
+import LowerHeader from "./LowerHeader";
 import { SlLocationPin } from "react-icons/sl";
 import { BsSearch } from "react-icons/bs";
-import LowerHeader from "./LowerHeader";
 import { BiCart } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
+import { Link } from "react-router-dom";
+import { auth } from "../../Utility/firebase";
 
-function Header() {
-  const [{ basket }, dispatch] = useContext(DataContext);
+const Header = () => {
+  const [{ user, basket }, dispatch] = useContext(DataContext);
+
   const totalItem = basket?.reduce((amount, item) => {
     return item.amount + amount;
   }, 0);
@@ -16,31 +18,28 @@ function Header() {
     <section className={styles.fixed}>
       <section>
         <div className={styles.header_container}>
-          {/*  LOGO + DELIVERY SECTION */}
+          {/* logo and delivery section */}
           <div className={styles.logo_container}>
+            {/* amazon logo */}
             <Link to="/">
-              {/* <a href="/"> */}
-              {/* Amazon Logo */}
               <img
                 src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
                 alt="amazon logo"
               />
-              {/* </a> */}
             </Link>
-
-            {/* Delivery location section */}
             <div className={styles.delivery}>
+              {/* location icon */}
               <span>
-                <SlLocationPin /> {/* Location icon */}
+                <SlLocationPin />
               </span>
               <div>
                 <p>Deliver to</p>
-                <span>Ethiopia</span> {/* Country name */}
+                <span>Ethiopia</span>
               </div>
             </div>
           </div>
 
-          {/*  SEARCH BAR  */}
+          {/* search bar section */}
           <div className={styles.search}>
             {/* Category dropdown */}
             <select name="" id="">
@@ -53,12 +52,10 @@ function Header() {
             {/* Search icon */}
             <BsSearch size={38} />
           </div>
-
-          {/* RIGHT SIDE LINKS (Language, Account, Orders, Cart) */}
+          {/*Language,Account,Orders,Cart */}
           <div className={styles.order_container}>
             {/* Language selector */}
             <Link to="" className={styles.language}>
-              {/* <a href="" className={styles.language}> */}
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/960px-Flag_of_the_United_States.svg.png?20240524035322"
                 alt=""
@@ -66,42 +63,43 @@ function Header() {
               <select name="" id="">
                 <option value="">EN</option>
               </select>
-              {/* </a> */}
             </Link>
 
             {/* Account section */}
-            {/* <a href=""> */}
-            <Link to={"/auth"}>
+            {/*if the user is not sign in*/}
+            <Link to={!user && "/auth"}>
               <div>
-                <p>Hello, Sign In</p>
-                <span>Account & Lists</span>
+                {user ? (
+                  <>
+                    <p>Hello {user?.email?.split("@")[0]}</p>
+                    <span onClick={() => auth.signOut()}>Sign Out</span>
+                  </>
+                ) : (
+                  <>
+                    <p>Hello, Sign In</p>
+                    <span>Account & Lists</span>
+                  </>
+                )}
               </div>
             </Link>
-            {/* </a> */}
 
             {/* Orders section */}
             <Link to="/orders">
-              {/* <a href=""> */}
               <p>returns</p>
               <span>& Orders</span>
-              {/* </a> */}
             </Link>
-
             {/* Cart section */}
             <Link to="/cart" className={styles.cart}>
-              {/* <a href="" className={styles.cart}> */}
               <BiCart size={35} /> {/* Cart icon */}
               <span>{totalItem}</span> {/* Item count */}
-              {/* </a> */}
+              {/* <span>{basket?.length || 0}</span> Item count */}
             </Link>
           </div>
         </div>
       </section>
-
-      {/*  LOWER NAVIGATION HEADER  */}
       <LowerHeader />
     </section>
   );
-}
+};
 
 export default Header;
